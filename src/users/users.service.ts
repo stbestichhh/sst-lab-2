@@ -25,7 +25,7 @@ export class UsersService {
 
   public update(userId: number, data: UpdateUserDto) {
     this.dbService.update('users', userId, data);
-    return { user: { id: userId, data }};
+    return { user: { id: userId, data } };
   }
 
   public delete(userId: number) {

@@ -14,10 +14,13 @@ export class RecordService {
     return record;
   }
 
-  public getAll(options: { userId?: number, categoryId?: number }) {
+  public getAll(options: { userId?: number; categoryId?: number }) {
     return this.dbService.getAll('records').filter((entity) => {
       const data = entity.data as CreateRecordDto;
-      if (data.userId === Number(options?.userId) || data.categoryId === Number(options?.categoryId)) {
+      if (
+        data.userId === Number(options?.userId) ||
+        data.categoryId === Number(options?.categoryId)
+      ) {
         return entity;
       }
     });

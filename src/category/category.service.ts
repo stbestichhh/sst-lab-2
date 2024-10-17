@@ -19,7 +19,10 @@ export class CategoryService {
   }
 
   public create(data: CreateCategoryDto) {
-    this.dbService.create('categories', { id: data.id, data: { name: data.name }});
+    this.dbService.create('categories', {
+      id: data.id,
+      data: { name: data.name },
+    });
     return { category: data };
   }
 

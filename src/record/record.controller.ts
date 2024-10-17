@@ -8,7 +8,7 @@ import {
   HttpStatus,
   Param,
   Post,
-  Query
+  Query,
 } from '@nestjs/common';
 import { RecordService } from './record.service';
 import { CreateRecordDto } from './dto';
@@ -23,7 +23,7 @@ export class RecordController {
   }
 
   @Get()
-  public getAll(@Query() options: { userId?: number, categoryId?: number }) {
+  public getAll(@Query() options: { userId?: number; categoryId?: number }) {
     if (!options.userId && !options.categoryId) {
       throw new BadRequestException('No querry params provided');
     }
