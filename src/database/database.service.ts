@@ -68,7 +68,7 @@ export class DatabaseService {
   }
 
   public drop(tableName?: string) {
-    if (!tableName) {
+    if (tableName) {
       return delete DatabaseService.dbHashMap[tableName];
     }
     DatabaseService.dbHashMap = {};
