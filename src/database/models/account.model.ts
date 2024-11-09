@@ -1,4 +1,4 @@
-import { Column, DataType, ForeignKey, Model } from 'sequelize-typescript';
+import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { User } from './user.model';
 
 export interface AccountCreationAttributes {
@@ -6,6 +6,7 @@ export interface AccountCreationAttributes {
   money: number;
 }
 
+@Table({ tableName: 'accounts' })
 export class Account extends Model<Account, AccountCreationAttributes> {
   @Column({
     type: DataType.STRING,

@@ -6,7 +6,7 @@ import {
 import { CreateRecordDto } from './dto';
 import { RecordRepository } from './record.repository';
 import { AccountRepository } from '../account/account.repository';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class RecordService {
@@ -29,8 +29,10 @@ export class RecordService {
 
     try {
       const record = await this.recordRepository.create(dto, transaction);
-      const account = await this.accountRepository.findByPk(
-        record.userId,
+      const account = await this.accountRepository.findOne(
+        {
+          userId: record.userId,
+        },
         transaction,
       );
       const money = account.money - record.spentAmount;
@@ -46,6 +48,7 @@ export class RecordService {
       return record;
     } catch (e) {
       await transaction.rollback();
+      console.log(e);
       throw new InternalServerErrorException(`Transaction rolled back`);
     }
   }

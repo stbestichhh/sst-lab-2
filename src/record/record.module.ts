@@ -9,6 +9,6 @@ import { AccountRepository } from '../account/account.repository';
 @Module({
   providers: [RecordService, RecordRepository, AccountRepository],
   controllers: [RecordController],
-  imports: [DatabaseModule.forFeature([Record, Account])],
+  imports: [DatabaseModule, DatabaseModule.forFeature([Record, Account])],
 })
 export class RecordModule {}

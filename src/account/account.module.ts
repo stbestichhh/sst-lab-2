@@ -6,8 +6,8 @@ import { DatabaseModule } from '../database/database.module';
 import { Account } from '../database/models';
 
 @Module({
-  providers: [AccountService],
-  controllers: [AccountController, AccountRepository],
+  providers: [AccountService, AccountRepository],
+  controllers: [AccountController],
   imports: [DatabaseModule.forFeature([Account])],
 })
 export class AccountModule {}
