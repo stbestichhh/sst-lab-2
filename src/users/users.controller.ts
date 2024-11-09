@@ -17,7 +17,7 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get(':id')
-  public get(@Param('id') userId: number) {
+  public get(@Param('id') userId: string) {
     return this.userService.get(userId);
   }
 
@@ -33,13 +33,13 @@ export class UsersController {
   }
 
   @Put(':id')
-  public update(@Param('id') userId: number, @Body() dto: UpdateUserDto) {
+  public update(@Param('id') userId: string, @Body() dto: UpdateUserDto) {
     return this.userService.update(userId, dto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public delete(@Param('id') userId: number) {
+  public delete(@Param('id') userId: string) {
     return this.userService.delete(userId);
   }
 }
