@@ -4,7 +4,7 @@ import { Category } from './category.model';
 
 interface RecordCreationAttributes {
   userId: string;
-  categoryId: number;
+  categoryId: string;
   spentAmount: number;
 }
 

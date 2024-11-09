@@ -1,46 +1,24 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { DatabaseService, Entity } from '../database/database.service';
+import { Injectable } from '@nestjs/common';
 import { CreateRecordDto } from './dto';
+import { RecordRepository } from './record.repository';
 
 @Injectable()
 export class RecordService {
-  constructor(private readonly dbService: DatabaseService) {}
+  constructor(private readonly recordRepository: RecordRepository) {}
 
-  public get(recordId: number) {
-    const record = this.dbService.get('records', recordId);
-    if (!record) {
-      throw new NotFoundException('Record not found');
-    }
-    return record;
+  public async get(recordId: string) {
+    return await this.recordRepository.findByPk(recordId);
   }
 
-  public getAll(options: { userId?: number; categoryId?: number }) {
-    return this.dbService.getAll('records').filter((entity) => {
-      const data = entity.data as CreateRecordDto;
-      if (
-        data.userId === Number(options?.userId) ||
-        data.categoryId === Number(options?.categoryId)
-      ) {
-        return entity;
-      }
-    });
+  public async getAll(options: { userId?: number; categoryId?: number }) {
+    return await this.recordRepository.findAll(options);
   }
 
-  public create(data: CreateRecordDto) {
-    const record: Entity = {
-      id: data.id,
-      data: {},
-    };
-    delete data.id;
-    record['data'] = {
-      ...data,
-      timestamp: new Date().toISOString(),
-    };
-    this.dbService.create('records', record);
-    return record;
+  public async create(dto: CreateRecordDto) {
+    return await this.recordRepository.create(dto);
   }
 
-  public delete(recordId: number) {
-    return this.dbService.delete('records', recordId);
+  public async delete(recordId: string) {
+    return await this.recordRepository.delete(recordId);
   }
 }
