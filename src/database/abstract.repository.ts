@@ -10,7 +10,7 @@ import {
 import { ValidationError, WhereOptions } from 'sequelize';
 
 export abstract class AbstractRepository<TModel extends Model> {
-  private readonly logger: Logger = new Logger(AbstractRepository.name);
+  protected readonly logger: Logger = new Logger(AbstractRepository.name);
 
   protected constructor(protected readonly model: ModelCtor<TModel>) {}
 
@@ -59,7 +59,7 @@ export abstract class AbstractRepository<TModel extends Model> {
     return entities as Array<TModel>;
   }
 
-  public async update(id: string, dto: Record<string, any>) {
+  public async update(id: string, dto: Partial<TModel>) {
     const entity = await this.findByPk(id);
     return await entity.set(dto).save();
   }

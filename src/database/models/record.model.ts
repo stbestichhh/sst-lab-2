@@ -22,7 +22,7 @@ export class Record extends Model<Record, RecordCreationAttributes> {
     primaryKey: true,
     unique: true,
   })
-  id: number;
+  id: string;
 
   @ForeignKey(() => User)
   @Column({

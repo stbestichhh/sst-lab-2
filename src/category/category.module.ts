@@ -8,6 +8,6 @@ import { CategoryRepository } from './category.repository';
 @Module({
   controllers: [CategoryController],
   providers: [CategoryService, CategoryRepository],
-  imports: [DatabaseModule, DatabaseModule.forFeature([Category])],
+  imports: [DatabaseModule.forFeature([Category])],
 })
 export class CategoryModule {}

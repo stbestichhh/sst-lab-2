@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as process from 'node:process';
 import * as Joi from 'joi';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Category, Record, User } from './models';
+import { Account, Category, Record, User } from './models';
 
 @Module({
   imports: [
@@ -35,7 +35,7 @@ import { Category, Record, User } from './models';
           process.env.POSTGRES_PASSWORD,
         database:
           configService.get<string>('POSTGRES_DB') || process.env.POSTGRES_DB,
-        models: [User, Category, Record],
+        models: [User, Category, Record, Account],
         autoLoadModels: true,
         sync: {
           alter: true,

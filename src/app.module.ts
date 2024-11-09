@@ -5,6 +5,7 @@ import { DatabaseModule } from './database/database.module';
 import { CategoryModule } from './category/category.module';
 import { RecordModule } from './record/record.module';
 import { ConfigModule } from '@nestjs/config';
+import { AccountModule } from './account/account.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -22,6 +23,7 @@ import * as Joi from 'joi';
         HOST: Joi.string().hostname().required(),
       }),
     }),
+    AccountModule,
   ],
 })
 export class AppModule {}
