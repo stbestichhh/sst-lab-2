@@ -1,7 +1,6 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 interface CategoryCreationAttributes {
-  id: number;
   name: string;
 }
 

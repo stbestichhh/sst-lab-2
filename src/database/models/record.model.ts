@@ -3,7 +3,6 @@ import { User } from './user.model';
 import { Category } from './category.model';
 
 interface RecordCreationAttributes {
-  id: number;
   userId: string;
   categoryId: number;
   spentAmount: number;
