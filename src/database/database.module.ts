@@ -37,7 +37,10 @@ import { Category, Record, User } from './models';
           configService.get<string>('POSTGRES_DB') || process.env.POSTGRES_DB,
         models: [User, Category, Record],
         autoLoadModels: true,
-        sync: { alter: true, force: false },
+        sync: {
+          alter: true,
+          force: process.env.NODE_ENV === 'development',
+        },
       }),
       imports: [ConfigModule],
       inject: [ConfigService],
