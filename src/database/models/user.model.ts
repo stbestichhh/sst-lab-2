@@ -8,7 +8,7 @@ interface UserCreationAttributes {
 @Table({ tableName: 'users' })
 export class User extends Model<User, UserCreationAttributes> {
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.STRING,
     allowNull: false,
     primaryKey: true,
     unique: true,

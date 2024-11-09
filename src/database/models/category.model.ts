@@ -8,7 +8,7 @@ interface CategoryCreationAttributes {
 @Table({ tableName: 'categories' })
 export class Category extends Model<Category, CategoryCreationAttributes> {
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.STRING,
     allowNull: false,
     primaryKey: true,
     unique: true,

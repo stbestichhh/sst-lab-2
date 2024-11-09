@@ -12,7 +12,7 @@ interface RecordCreationAttributes {
 @Table({ tableName: 'records' })
 export class Record extends Model<Record, RecordCreationAttributes> {
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.STRING,
     allowNull: false,
     primaryKey: true,
     unique: true,
@@ -21,14 +21,14 @@ export class Record extends Model<Record, RecordCreationAttributes> {
 
   @ForeignKey(() => User)
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.STRING,
     allowNull: false,
   })
   userId: string;
 
   @ForeignKey(() => Category)
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.STRING,
     allowNull: false,
   })
   categoryId: number;
