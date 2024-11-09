@@ -33,7 +33,7 @@ export class Record extends Model<Record, RecordCreationAttributes> {
   categoryId: number;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   spentAmount: number;

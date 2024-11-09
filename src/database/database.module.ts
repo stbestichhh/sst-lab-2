@@ -8,7 +8,7 @@ import { Category, Record, User } from './models';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`,
+      envFilePath: `.env`,
       isGlobal: true,
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().hostname().required(),
