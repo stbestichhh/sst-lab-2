@@ -21,11 +21,20 @@ import { Category, Record, User } from './models';
     SequelizeModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         dialect: 'postgres',
-        host: configService.get<string>('POSTGRES_HOST'),
-        port: configService.get<number>('POSTGRES_PORT'),
-        username: configService.get<string>('POSTGRES_USER'),
-        password: configService.get<string>('POSTGRES_PASSWORD'),
-        database: configService.get<string>('POSTGRES_DB'),
+        host:
+          configService.get<string>('POSTGRES_HOST') ||
+          process.env.POSTGRES_HOST,
+        port:
+          configService.get<number>('POSTGRES_PORT') ||
+          Number(process.env.POSTGRES_PORT),
+        username:
+          configService.get<string>('POSTGRES_USER') ||
+          process.env.POSTGRES_USER,
+        password:
+          configService.get<string>('POSTGRES_PASSWORD') ||
+          process.env.POSTGRES_PASSWORD,
+        database:
+          configService.get<string>('POSTGRES_DB') || process.env.POSTGRES_DB,
         models: [User, Category, Record],
         autoLoadModels: true,
         sync: { alter: true, force: false },

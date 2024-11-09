@@ -1,13 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as process from 'node:process';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger(bootstrap.name);
+  const config = app.get<ConfigService>(ConfigService);
 
-  const PORT = 9110;
-  const HOST = process.env.HOST || 'localhost';
+  const PORT = config.get<number>('PORT') || Number(process.env.PORT);
+  const HOST = config.get<string>('HOST') || process.env.HOST;
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -16,7 +19,7 @@ async function bootstrap() {
   );
 
   await app.listen(PORT, HOST, () => {
-    console.log(`Server is running on http://${HOST}:${PORT}`);
+    logger.log(`Server is running on http://${HOST}:${PORT}`);
   });
 }
 bootstrap();
