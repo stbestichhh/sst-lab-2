@@ -32,7 +32,9 @@ export abstract class AbstractRepository<TModel extends Model> {
   public async findByPk(id: string) {
     const entity = await this.model.findByPk(id);
     if (!entity) {
-      throw new NotFoundException(`Entity not found by id: ${id}`);
+      throw new NotFoundException(
+        `Entity ${this.model.name} not found by id: ${id}`,
+      );
     }
     return entity as TModel;
   }
@@ -40,7 +42,9 @@ export abstract class AbstractRepository<TModel extends Model> {
   public async findOne(options: WhereOptions<TModel>) {
     const entity = await this.model.findOne({ where: options });
     if (!entity) {
-      throw new NotFoundException(`Entity not found by options: ${options}`);
+      throw new NotFoundException(
+        `Entity ${this.model.name} not found by options: ${options}`,
+      );
     }
     return entity as TModel;
   }
@@ -48,7 +52,9 @@ export abstract class AbstractRepository<TModel extends Model> {
   public async findAll(options?: WhereOptions<TModel>) {
     const entities = await this.model.findAll({ where: options });
     if (!entities.length) {
-      throw new NotFoundException(`Entity not found by options: ${options}`);
+      throw new NotFoundException(
+        `Entity ${this.model.name} not found by options: ${options}`,
+      );
     }
     return entities as Array<TModel>;
   }
