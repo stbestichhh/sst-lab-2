@@ -21,7 +21,7 @@ export class CategoryController {
   }
 
   @Get(':id')
-  public getOne(@Param('id') id: number) {
+  public getOne(@Param('id') id: string) {
     return this.categoryService.get(id);
   }
 
@@ -33,7 +33,7 @@ export class CategoryController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public delete(@Param('id') id: number) {
+  public delete(@Param('id') id: string) {
     return this.categoryService.delete(id);
   }
 }

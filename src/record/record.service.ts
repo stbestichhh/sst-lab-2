@@ -1,46 +1,59 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { DatabaseService, Entity } from '../database/database.service';
+import {
+  ForbiddenException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateRecordDto } from './dto';
+import { RecordRepository } from './record.repository';
+import { AccountRepository } from '../account/account.repository';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class RecordService {
-  constructor(private readonly dbService: DatabaseService) {}
+  constructor(
+    private readonly recordRepository: RecordRepository,
+    private readonly accountRepository: AccountRepository,
+    private readonly sequelize: Sequelize,
+  ) {}
 
-  public get(recordId: number) {
-    const record = this.dbService.get('records', recordId);
-    if (!record) {
-      throw new NotFoundException('Record not found');
-    }
-    return record;
+  public async get(recordId: string) {
+    return await this.recordRepository.findByPk(recordId);
   }
 
-  public getAll(options: { userId?: number; categoryId?: number }) {
-    return this.dbService.getAll('records').filter((entity) => {
-      const data = entity.data as CreateRecordDto;
-      if (
-        data.userId === Number(options?.userId) ||
-        data.categoryId === Number(options?.categoryId)
-      ) {
-        return entity;
+  public async getAll(options: { userId?: number; categoryId?: number }) {
+    return await this.recordRepository.findAll(options);
+  }
+
+  public async create(dto: CreateRecordDto) {
+    const transaction = await this.sequelize.transaction();
+
+    try {
+      const record = await this.recordRepository.create(dto, transaction);
+      const account = await this.accountRepository.findOne(
+        {
+          userId: record.userId,
+        },
+        transaction,
+      );
+      const money = account.money - record.spentAmount;
+
+      if (money < 0) {
+        await transaction.rollback();
+        return new ForbiddenException(
+          `You dont have enough money for this record`,
+        );
       }
-    });
+      await account.set({ money }).save({ transaction });
+      await transaction.commit();
+      return record;
+    } catch (e) {
+      await transaction.rollback();
+      console.log(e);
+      throw new InternalServerErrorException(`Transaction rolled back`);
+    }
   }
 
-  public create(data: CreateRecordDto) {
-    const record: Entity = {
-      id: data.id,
-      data: {},
-    };
-    delete data.id;
-    record['data'] = {
-      ...data,
-      timestamp: new Date().toISOString(),
-    };
-    this.dbService.create('records', record);
-    return record;
-  }
-
-  public delete(recordId: number) {
-    return this.dbService.delete('records', recordId);
+  public async delete(recordId: string) {
+    return await this.recordRepository.delete(recordId);
   }
 }

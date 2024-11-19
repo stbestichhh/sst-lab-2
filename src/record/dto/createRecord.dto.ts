@@ -1,17 +1,13 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateRecordDto {
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  userId: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  userId: number;
-
-  @IsNumber()
-  @IsNotEmpty()
-  categoryId: number;
+  categoryId: string;
 
   @IsNumber()
   @IsNotEmpty()

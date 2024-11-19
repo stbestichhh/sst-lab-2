@@ -1,34 +1,28 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly dbService: DatabaseService) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
-  public get(userId: number) {
-    const user = this.dbService.get('users', userId);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-    return user;
+  public async get(userId: string) {
+    return await this.userRepository.findByPk(userId);
   }
 
-  public getAll() {
-    return this.dbService.getAll('users');
+  public async getAll() {
+    return await this.userRepository.findAll();
   }
 
-  public create(data: CreateUserDto) {
-    this.dbService.create('users', data);
-    return { user: data };
+  public async create(dto: CreateUserDto) {
+    return await this.userRepository.create(dto);
   }
 
-  public update(userId: number, data: UpdateUserDto) {
-    this.dbService.update('users', userId, data);
-    return { user: { id: userId, data } };
+  public async update(userId: string, dto: UpdateUserDto) {
+    return await this.userRepository.update(userId, dto);
   }
 
-  public delete(userId: number) {
-    return this.dbService.delete('users', userId);
+  public async delete(userId: string) {
+    return await this.userRepository.delete(userId);
   }
 }
