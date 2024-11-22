@@ -5,7 +5,9 @@ import { ConfigService } from '@nestjs/config';
 import * as process from 'node:process';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
   const logger = new Logger(bootstrap.name);
   const config = app.get<ConfigService>(ConfigService);
 

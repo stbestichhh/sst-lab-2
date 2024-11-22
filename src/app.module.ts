@@ -6,6 +6,7 @@ import { CategoryModule } from './category/category.module';
 import { RecordModule } from './record/record.module';
 import { ConfigModule } from '@nestjs/config';
 import { AccountModule } from './account/account.module';
+import { AuthModule } from './auth/auth.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -24,6 +25,7 @@ import * as Joi from 'joi';
       }),
     }),
     AccountModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
