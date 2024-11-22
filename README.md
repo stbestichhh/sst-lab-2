@@ -1,4 +1,4 @@
-# Yakymchuk Kiril Lab 3
+# Yakymchuk Kiril Lab 4
 ## Variant 0 - Облік доходів
 
 ## Description
