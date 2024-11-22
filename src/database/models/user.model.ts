@@ -25,7 +25,7 @@ export class User extends Model<User, UserCreationAttributes> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   })
   email: string;
 

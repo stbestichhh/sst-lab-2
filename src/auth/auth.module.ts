@@ -13,7 +13,9 @@ import { LocalStrategy } from './local.strategy';
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         JWT_SECRET: Joi.string().required(),
-        JWT_EXPIRATION: Joi.string().regex(/^\s*(\d+)\s*(d|days|h|hours)?\s*$/).required(),
+        JWT_EXPIRATION: Joi.string()
+          .regex(/^\s*(\d+)\s*(d|days|h|hours)?\s*$/)
+          .required(),
       }),
     }),
     JwtModule.registerAsync({

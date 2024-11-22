@@ -6,7 +6,8 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  Post, UseGuards,
+  Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto';

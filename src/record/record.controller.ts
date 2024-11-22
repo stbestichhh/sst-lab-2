@@ -8,7 +8,8 @@ import {
   HttpStatus,
   Param,
   Post,
-  Query, UseGuards,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { RecordService } from './record.service';
 import { CreateRecordDto } from './dto';
