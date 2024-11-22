@@ -7,11 +7,13 @@ import {
   HttpStatus,
   Param,
   Post,
-  Put,
+  Put, UseGuards,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/createAccount.dto';
+import { JwtGuard } from '../auth/jwt.guard';
 
+@UseGuards(JwtGuard)
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
