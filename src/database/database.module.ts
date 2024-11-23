@@ -21,6 +21,12 @@ import { Account, Category, Record, User } from './models';
     SequelizeModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         dialect: 'postgres',
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        },
         host:
           configService.get<string>('POSTGRES_HOST') ||
           process.env.POSTGRES_HOST,
